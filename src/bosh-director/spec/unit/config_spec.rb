@@ -542,7 +542,7 @@ describe Bosh::Director::Config do
       expect(event.object_name).to eq('custom-name')
       expect(event.context).to eq({'custom' => 'context'})
     end
-  end  
+  end
 
   context 'multiple digest' do
     context 'when verify multidigest is provided' do

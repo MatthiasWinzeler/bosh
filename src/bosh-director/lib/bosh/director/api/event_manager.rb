@@ -1,8 +1,6 @@
 module Bosh::Director
   module Api
     class EventManager
-    include SyslogHelper
-
       def initialize(record_events)
         @record_events = record_events
       end
@@ -52,7 +50,7 @@ module Bosh::Director
             deployment:  deployment,
             instance:    instance,
             context:     context)
-        syslog(:info, JSON.generate(event.to_hash))
+        AuditLogger.info(JSON.generate(event.to_hash))
         event
       end
 
@@ -67,6 +65,7 @@ module Bosh::Director
           Bosh::Director::Models::Event.filter(Sequel.lit("id < ?", start_id_to_remove)).delete if start_id_to_remove != 0
         end
       end
+
     end
   end
 end

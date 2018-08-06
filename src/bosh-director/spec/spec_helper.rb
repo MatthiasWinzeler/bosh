@@ -228,6 +228,8 @@ RSpec.configure do |rspec|
     @event_log = Bosh::Director::EventLog::Log.new(@event_buffer)
     Bosh::Director::Config.event_log = @event_log
 
+    allow(Bosh::Director::AuditLogger).to receive(:info).and_return(double('fake-logger', info: nil))
+
     threadpool = instance_double(Bosh::Director::ThreadPool)
     allow(Bosh::Director::ThreadPool).to receive(:new).and_return(threadpool)
     allow(threadpool).to receive(:wrap).and_yield(threadpool)

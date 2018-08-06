@@ -48,7 +48,7 @@ describe 'director.yml.erb' do
         'generate_vm_passwords' => false,
         'remove_dev_tools' => false,
         'log_level' => 'debug',
-        'log_access_events_to_syslog' => false,
+        'log_access_events' => false,
         'flush_arp' => false,
         'local_dns' => {
           'enabled' => true,
