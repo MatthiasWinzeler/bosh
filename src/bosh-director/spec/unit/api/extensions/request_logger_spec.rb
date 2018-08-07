@@ -18,6 +18,7 @@ module Bosh::Director
       let(:test_path) { '/test_route' }
       let(:authorize!) {} # not authorized
       let(:query) { nil }
+      let(:audit_logger) { instance_double(Bosh::Director::AuditLogger) }
 
       before { allow(Socket).to receive(:gethostname).and_return('director-hostname') }
       before do
@@ -35,11 +36,12 @@ module Bosh::Director
       let(:expected_status) { 401 }
 
       let(:log_string) do
-        authorize!
         log_string = nil
-        allow(Bosh::Director::AuditLogger).to receive(:info) do |log|
+        allow(Bosh::Director::AuditLogger).to receive(:new).and_return(audit_logger)
+        allow(audit_logger).to receive(:info) do |log|
           log_string = log
         end
+        authorize!
         header 'random-header',      'should-be-ignored'
         header 'HOST',               'fake-host.com'
         header 'X_REAL_IP',          '5.6.7.8'
@@ -59,7 +61,7 @@ module Bosh::Director
       context 'when enabled' do
         before { config_hash['log_access_events'] = true }
 
-        describe 'log_request_to_syslog' do
+        describe 'log_request_to_auditlog' do
           context 'CEF Header' do
             it 'includes CEF version' do
               expect(log_string).to include('CEF:0|')
@@ -124,6 +126,7 @@ module Bosh::Director
 
               context 'basic' do
                 let(:authorize!) { basic_authorize('admin', 'admin') }
+
                 it 'includes username' do
                   expect(log_string).to include('duser=admin')
                 end

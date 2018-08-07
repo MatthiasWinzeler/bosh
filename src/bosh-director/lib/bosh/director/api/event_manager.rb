@@ -3,6 +3,7 @@ module Bosh::Director
     class EventManager
       def initialize(record_events)
         @record_events = record_events
+        @audit_logger = AuditLogger.new
       end
 
       def event_to_hash(event)
@@ -50,7 +51,7 @@ module Bosh::Director
             deployment:  deployment,
             instance:    instance,
             context:     context)
-        AuditLogger.info(JSON.generate(event.to_hash))
+        @audit_logger.info(JSON.generate(event.to_hash))
         event
       end
 

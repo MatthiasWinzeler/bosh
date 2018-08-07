@@ -9,6 +9,7 @@ module Bosh::Director
           super()
           @config = config
           @logger = Config.logger
+          @audit_logger = AuditLogger.new
           @identity_provider = config.identity_provider
           @permission_authorizer = PermissionAuthorizer.new(config.get_uuid_provider)
           @backup_manager = BackupManager.new
@@ -22,7 +23,7 @@ module Bosh::Director
         end
 
         register(Bosh::Director::Api::Extensions::RequestLogger)
-        log_request_to_syslog
+        log_request_to_auditlog
 
         register(Bosh::Director::Api::Extensions::Scoping)
 

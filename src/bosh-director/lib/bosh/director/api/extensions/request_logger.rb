@@ -14,7 +14,7 @@ module Bosh::Director
           HTTP_X_BOSH_UPLOAD_REQUEST_TIME
         )
 
-        def log_request_to_syslog
+        def log_request_to_auditlog
           after do
             if @config.log_access_events
               header_string = ''
@@ -57,7 +57,7 @@ module Bosh::Director
                                                          device_version, signature_id, name, severity, extension]
               cef_log_encoded = cef_log.force_encoding(Encoding::UTF_8)
 
-              AuditLogger.info(cef_log_encoded)
+              @audit_logger.info(cef_log_encoded)
             end
           end
         end
