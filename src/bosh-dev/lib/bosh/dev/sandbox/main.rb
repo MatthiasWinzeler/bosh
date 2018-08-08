@@ -163,10 +163,6 @@ module Bosh::Dev::Sandbox
       cloud_storage_dir
     end
 
-    def audit_logs_path
-      File.join(@log_path, 'audit.log')
-    end
-
     def sandbox_path(path)
       File.join(sandbox_root, path)
     end
