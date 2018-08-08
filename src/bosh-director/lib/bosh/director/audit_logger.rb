@@ -3,7 +3,7 @@ require 'logging'
 module Bosh::Director
   class AuditLogger
 
-    DEFAULT_AUDIT_LOG_PATH = '/var/vcap/sys/log/director'.freeze
+    DEFAULT_AUDIT_LOG_PATH = File.join('var', 'vcap', 'sys', 'log', 'director').freeze
 
     def initialize
       @logger = Logging::Logger.new('DirectorAudit')
