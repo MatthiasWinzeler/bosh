@@ -6,17 +6,17 @@ module Bosh::Director
     DEFAULT_AUDIT_LOG_PATH = File.join('var', 'vcap', 'sys', 'log', 'director').freeze
 
     def initialize
-      @logger = Logging::Logger.new('DirectorAudit')
-      audit_log = File.join(DEFAULT_AUDIT_LOG_PATH, Config.audit_filename)
+      log_file_path = Config.audit_log_path || DEFAULT_AUDIT_LOG_PATH
 
+      @logger = Logging::Logger.new('DirectorAudit')
+      @logger.level = 'debug'
       @logger.add_appenders(
         Logging.appenders.file(
           'DirectorAudit',
-          filename: audit_log,
+          filename: File.join(log_file_path, Config.audit_filename),
           layout: ThreadFormatter.layout,
         ),
       )
-      @logger.level = 'debug'
     end
 
     def info(message)

@@ -16,6 +16,7 @@ module Bosh::Director
 
       attr_accessor(
         :audit_filename,
+        :audit_log_path,
         :base_dir,
         :cloud_options,
         :current_job,
@@ -118,6 +119,8 @@ module Bosh::Director
         @logger = Logging::Logger.new('Director')
         @logger.add_appenders(shared_appender)
         @logger.level = Logging.levelify(logging_config.fetch('level', 'debug'))
+
+        @audit_log_path = config['audit_log_path']
 
         # Event logger supposed to be overridden per task,
         # the default one does nothing
