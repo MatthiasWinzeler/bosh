@@ -15,6 +15,7 @@ describe Bosh::Director::AuditLogger do
       allow(appenders).to receive(:file)
 
       allow(Bosh::Director::Config).to receive(:audit_filename).and_return('fake-log-file.log')
+      allow(Bosh::Director::Config).to receive(:audit_log_path).and_return('/var/vcap/sys/log/director')
       allow(Bosh::Director::AuditLogger).to receive(:new).and_call_original
       subject { described_class.new }
     end
