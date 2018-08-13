@@ -165,14 +165,6 @@ describe 'director.yml.erb' do
         end
       end
 
-      it 'should contain the trusted_certs field' do
-        expect(parsed_yaml['trusted_certs']).to eq("test_trusted_certs\nvalue")
-      end
-
-      it 'should contain the version' do
-        expect(parsed_yaml['version']).to eq('0.0.0')
-      end
-
       context 'when domain name specified without all other dns properties' do
         before do
           merged_manifest_properties['dns'] = {
@@ -511,6 +503,17 @@ describe 'director.yml.erb' do
         end
       end
 
+      it 'should contain the trusted_certs field' do
+        expect(parsed_yaml['trusted_certs']).to eq("test_trusted_certs\nvalue")
+      end
+
+      it 'should contain the version' do
+        expect(parsed_yaml['version']).to eq('0.0.0')
+      end
+
+      it 'should contain the audit log path' do
+        expect(parsed_yaml['audit_log_path']).to eq('/var/vcap/sys/log/director')
+      end
     end
 
     describe 'ignore_missing_gateway property' do
