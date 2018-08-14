@@ -26,7 +26,7 @@ describe 'Audit log', type: :integration do
   it 'contains request logs' do
     audit_log_content = File.open(audit_director_log).read
 
-    expect(audit_log_content).to match(/^.*CEF.*|\\deployments|.*requestMethod=POST.*$/)
+    expect(audit_log_content).to match(/^I.*CEF.*|\\deployments|.*requestMethod=POST.*/)
   end
 
   it 'contains event logs' do
@@ -34,6 +34,6 @@ describe 'Audit log', type: :integration do
                           File.open(audit_worker_1_log).read +
                           File.open(audit_worker_2_log).read
 
-    expect(worker_logs_content).to match(/^.*"action":"create".*"object_type":"deployment".*$/)
+    expect(worker_logs_content).to match(/^I.*"action":"create".*"object_type":"deployment".*/)
   end
 end
