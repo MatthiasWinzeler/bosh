@@ -1,7 +1,9 @@
 require 'logging'
+require 'singleton'
 
 module Bosh::Director
   class AuditLogger
+    include Singleton
 
     def initialize
       @logger = Logging::Logger.new('DirectorAudit')

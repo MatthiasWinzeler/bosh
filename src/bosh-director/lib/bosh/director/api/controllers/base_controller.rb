@@ -9,7 +9,7 @@ module Bosh::Director
           super()
           @config = config
           @logger = Config.logger
-          @audit_logger = AuditLogger.new
+          @audit_logger = AuditLogger.instance
           @identity_provider = config.identity_provider
           @permission_authorizer = PermissionAuthorizer.new(config.get_uuid_provider)
           @backup_manager = BackupManager.new

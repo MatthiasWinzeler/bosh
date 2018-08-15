@@ -3,7 +3,7 @@ module Bosh::Director
     class EventManager
       def initialize(record_events)
         @record_events = record_events
-        @audit_logger = AuditLogger.new
+        @audit_logger = AuditLogger.instance
       end
 
       def event_to_hash(event)
